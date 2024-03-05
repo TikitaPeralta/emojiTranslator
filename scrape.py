@@ -22,12 +22,13 @@ try:
             table = soup.find('table')
     rows = table.find_all('tr')
     list_of_rows = []
-    print(rows)
+    # print(rows)
     for row in rows:
         cells = row.find_all('td')
-        list_of_rows.append(cells)
-
-        print(list_of_rows)
+        list_of_rows.append([cells])
+        # print(list_of_rows)
+    for row in list_of_rows:
+        print(row[0])
 
 except requests.exceptions.RequestException as e:
     print(f"An error occurred: {e}")
