@@ -15,6 +15,7 @@ main {
     align-items: center;
     background-color: rgb(255, 244, 122);
     min-height: 50vh;
+    overflow-y: hidden;
 }
 
 #sentence_area, #result_area {
@@ -32,6 +33,36 @@ main {
     font-weight: 400;
     font-style: normal;
     font-size: 20px;
+}
+
+#input_area {
+    display: flex; 
+    align-items: center; 
+    justify-content: space-around;
+}
+/*larger screen*/
+@media only screen and (max-width: 2000px) {
+    #input_area {
+        flex-direction: row;
+        width: 20%; 
+    }
+}
+
+/*smaller screen*/
+@media only screen and (max-width: 600px) {
+    #input_area {
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 52%;
+    }
+    #search {
+        display: flex;
+        align-self: flex-start;
+    }
+    button {
+        display: flex;
+        align-self: flex-end;
+    }
 }
 
 button {
