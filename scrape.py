@@ -12,35 +12,38 @@ try:
         print("Success!")
     else:
         print(f"Failed with status code: {req.status_code}")
-    soup = BeautifulSoup(req.content, "html.parser")
+
+    with open('table.html', 'wb+') as f:
+        f.write(req.content)
+    with open('table.html', 'rb') as f:
+        soup = BeautifulSoup(f.read(), 'lxml')
+    # soup = BeautifulSoup(req.content, "html.parser")
     results = soup.findAll("div", {"class": "main"})
-    # print(results)
     l = []
     for res in results:
         art = soup.find('article')
         for a in art:
             table = soup.find('table')
     rows = table.find_all('tr')
-    list_of_rows = []
-    # print(rows)
-    for row in rows:
-        cells = row.find_all('td')
-        list_of_rows.append([cells])
-        # print(list_of_rows)
-    for row in list_of_rows:
-        print(row[0])
+    with open('data.csv', 'w', newline='') as file:
+        writer = csv.writer(file)
+        field = ["Name", "Decimal"]
+        list_of_rows = []
+        for row in rows:
+            cells = row.find_all('td')
+            list_of_rows.append([cells])
+        for row in list_of_rows:
+            if len(row[0]) != 0:
+                r_1 = row[0][1].text.strip()
+                r_3 = row[0][3].text.strip()[9:-1]
+                writer.writerow(field)
+                if r_3 == '':
+                    r_4 = row[0][3].text.strip()[:-1]
+                    print('name: ', r_1, 'decimal: ', r_4)
+                    writer.writerow([r_1, r_4])
+                else:
+                    print('name: ', r_1, 'decimal: ', r_3)
+                    writer.writerow([r_1, r_3])
 
 except requests.exceptions.RequestException as e:
     print(f"An error occurred: {e}")
-
-
-# for row in list_of_rows:
-#     print(row)
-
-# with open('data.csv', 'w', newline='') as file:
-#     writer = csv.writer(file)
-#     field = ["Name", "Decimal"]
-    
-#     writer.writerow(field)
-#     for c in rows:
-#         writer.writerow([f'{name}'.lower, f'{decimal}'])
