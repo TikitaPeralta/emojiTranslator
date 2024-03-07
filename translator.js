@@ -31,7 +31,7 @@ function play() {
                     console.log('true')
                 }
                 console.log(newSentence.join(' '))
-                result.innerHTML = newSentence.join(' ');
+                result.innerHTML = `<span style='font-size:30px; font-family: "Madimi One", sans-serif'>${newSentence.join(' ')}</span>`;
             }) 
             .catch(error => console.error('Error fetching the CSV file:', error));
 }
