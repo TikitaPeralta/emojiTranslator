@@ -27,23 +27,28 @@ try:
     rows = table.find_all('tr')
     with open('data.csv', 'w', newline='') as file:
         writer = csv.writer(file)
-        field = ["Name", "Decimal"]
+        # field = ["Name", "Decimal"]
         list_of_rows = []
         for row in rows:
             cells = row.find_all('td')
             list_of_rows.append([cells])
         for row in list_of_rows:
             if len(row[0]) != 0:
-                r_1 = row[0][1].text.strip()
-                r_3 = row[0][3].text.strip()[9:-1]
-                writer.writerow(field)
-                if r_3 == '':
-                    r_4 = row[0][3].text.strip()[:-1]
-                    print('name: ', r_1, 'decimal: ', r_4)
-                    writer.writerow([r_1, r_4])
-                else:
-                    print('name: ', r_1, 'decimal: ', r_3)
-                    writer.writerow([r_1, r_3])
+                name = row[0][1].text.strip()
+                decimal = row[0][3].text.strip()[9:-1]
+                corrected_decimal = row[0][3].text.strip()[:-1]
+                if 'type-' not in name and ',' not in name:
+                    if '≊' in name:
+                        shorter_name = name.split('≊')
+                        if decimal == '':
+                            writer.writerow([shorter_name[0], corrected_decimal])
+                        else:
+                            writer.writerow([shorter_name[0], decimal])
+                    else:
+                        if decimal == '':
+                            writer.writerow([name, corrected_decimal])
+                        else:
+                            writer.writerow([name, decimal])
 
 except requests.exceptions.RequestException as e:
     print(f"An error occurred: {e}")

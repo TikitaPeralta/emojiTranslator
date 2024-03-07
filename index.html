@@ -8,15 +8,18 @@
     <link rel="reset" href="./reset.css">
     <link rel="stylesheet" href="./style.css">
     <link href="https://fonts.googleapis.com/css2?family=Madimi+One&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="translator.js"></script>
 </head>
 <body>
     <main>
         <div id="sentence_area">
             <div><p>Enter a sentence and translate it into emojis:</p></div>
-            <div id="input_area">
-                <input id="search" type="text" placeholder="Enter sentence">
-                <button>Translate!</button>
-            </div>
+            <form>
+                <div id="input_area">
+                    <input id="search" type="text" placeholder="Enter sentence">
+                    <button onclick="play(event)" type="submit" value="Submit">Translate!</button>
+                </div>
+            </form>
         </div>
         <div id="result_area"></div>
     </main>
